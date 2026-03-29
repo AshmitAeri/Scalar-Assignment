@@ -81,7 +81,7 @@ function Checkout({ cart, setCart, user }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5001/orders", {
+      const res = await fetch("https://flipkart-backend-em8x.onrender.com/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

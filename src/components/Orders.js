@@ -6,7 +6,7 @@ function Orders() {
 
   // 🔥 Fetch orders
   const fetchOrders = () => {
-    fetch("http://localhost:5001/orders")
+    fetch("https://flipkart-backend-em8x.onrender.com/orders")
       .then((res) => res.json())
       .then((data) => {
   if (Array.isArray(data)) {
