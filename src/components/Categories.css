@@ -1,0 +1,28 @@
+.categories {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  background-color: white;
+}
+
+.category {
+  text-align: center;
+  cursor: pointer;
+}
+
+.category img {
+  width: 60px;
+}
+
+.category p {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.category:hover {
+  color: #2874f0;
+}
+.category img:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}

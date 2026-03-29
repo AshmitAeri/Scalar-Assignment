@@ -1,0 +1,51 @@
+.checkout {
+  padding: 20px;
+}
+
+.checkout-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.checkout-form, .checkout-summary {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.checkout-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.payment-section {
+  margin-top: 15px;
+}
+
+.payment-section label {
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.checkout-summary button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background: #2874f0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkout-summary button:hover {
+  background: #0b5ed7;
+}
