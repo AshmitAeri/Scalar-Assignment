@@ -6,7 +6,7 @@ function Products({ addToCart, addToWishlist, search, category, setCategory }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/products")
+    fetch("https://flipkart-backend-em8x.onrender.com/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error(err));
