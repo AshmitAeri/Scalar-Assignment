@@ -10,7 +10,7 @@ function Categories({ setCategory }) {
     { name: "Home", img: "https://cdn-icons-png.flaticon.com/512/25/25694.png" },
     { name: "Appliances", img: "https://rukminim1.flixcart.com/flap/64/64/image/0ff199d1bd27eb98.png" },
     { name: "Travel", img: "https://rukminim1.flixcart.com/flap/64/64/image/71050627a56b4693.png" },
-    { name: "Beauty", img: "https://rukminim1.flixcart.com/flap/64/64/image/dff3f7adcf3a90c6.png" },
+    { name: "Beauty", img: "https://www.conceptsnc.com/wp-content/uploads/2024/02/studio-concept-agenzia-comunicazione-specilizzata-cosmetici-beauty-agency-milano-servizi-still-life.webp" },
   ];
 
   return (
