@@ -2,36 +2,58 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login({ setUser }) {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (!name || !password) {
-      alert("Enter name and password");
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Enter email and password");
       return;
     }
 
-    // 🔥 Simple check (demo purpose)
-    if (password !== "1234") {
-      alert("Wrong password (use 1234)");
-      return;
-    }
+    try {
+      const res = await fetch(
+        "https://flipkart-backend-em8x.onrender.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    setUser(name);
-    navigate("/");
+      const data = await res.json();
+
+      if (data.token) {
+        // 🔐 store token
+        localStorage.setItem("token", data.token);
+
+        // optional: store user email
+        setUser(email);
+
+        alert("Login successful ✅");
+        navigate("/");
+      } else {
+        alert(data.error || "Login failed ❌");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error ❌");
+    }
   };
 
   return (
     <div style={{ padding: "40px", textAlign: "center" }}>
       <h2>Login</h2>
 
-      {/* NAME */}
+      {/* EMAIL */}
       <input
-        type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         style={{
           padding: "10px",
           width: "250px",
@@ -69,10 +91,6 @@ function Login({ setUser }) {
       >
         Login
       </button>
-
-      <p style={{ marginTop: "10px", fontSize: "12px", color: "gray" }}>
-        Demo password: <b>1234</b>
-      </p>
     </div>
   );
 }

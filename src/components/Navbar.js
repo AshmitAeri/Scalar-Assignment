@@ -7,6 +7,15 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
   const [products, setProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
+  // 🔐 Check login
+  const token = localStorage.getItem("token");
+
+  // Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   // Fetch products
   useEffect(() => {
     fetch("https://flipkart-backend-em8x.onrender.com/products")
@@ -55,22 +64,21 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
     <div className="navbar">
 
       {/* 🔵 LOGO */}
-      {/* 🔵 LOGO */}
-<div
-  className="logo-container"
-  onClick={() => {
-    setCategory("All");
-    setSearch("");
-    setInput("");
-  }}
->
-  <img
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0cGuSNJW0YeTDT8v3ndG9wnTk-1uJUbnTqQ&s"
-    alt="logo"
-    className="logo-img"
-  />
-  <h2 className="logo-text">Flipkart Clone</h2>
-</div>
+      <div
+        className="logo-container"
+        onClick={() => {
+          setCategory("All");
+          setSearch("");
+          setInput("");
+        }}
+      >
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0cGuSNJW0YeTDT8v3ndG9wnTk-1uJUbnTqQ&s"
+          alt="logo"
+          className="logo-img"
+        />
+        <h2 className="logo-text">Flipkart Clone</h2>
+      </div>
 
       {/* 🔍 SEARCH */}
       <div className="search-container">
@@ -120,14 +128,29 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
       {/* RIGHT SIDE */}
       <div className="nav-right">
 
-        {/* 🔐 LOGIN / PROFILE */}
-        {!user ? (
+        {/* 🔐 LOGIN / USER */}
+        {!token ? (
           <Link to="/login" className="login-btn">
             Login
           </Link>
         ) : (
           <div className="profile">
-            👤 {user}
+            👤 {user || "User"}
+
+            <button
+              onClick={handleLogout}
+              style={{
+                marginLeft: "10px",
+                background: "red",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}
+            >
+              Logout
+            </button>
           </div>
         )}
 
@@ -147,7 +170,6 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
         </Link>
 
       </div>
-
     </div>
   );
 }

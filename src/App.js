@@ -11,8 +11,9 @@ import Checkout from "./components/Checkout";
 import Success from "./components/Success";
 import Wishlist from "./components/Wishlist";
 import Login from "./components/Login";
-import Orders from "./components/Orders";   // ✅ added
-
+import Orders from "./components/Orders";
+import Register from "./components/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -23,22 +24,22 @@ function App() {
   const [user, setUser] = useState(null);
 
   const addToCart = (item) => {
-  const existing = cart.find((c) => c.id === item.id);
+    const existing = cart.find((c) => c.id === item.id);
 
-  if (existing) {
-    const updatedCart = cart.map((c) =>
-      c.id === item.id
-        ? {
-            ...c,
-            quantity: Math.min((c.quantity || 1) + 1, 5)
-          }
-        : c
-    );
-    setCart(updatedCart);
-  } else {
-    setCart([...cart, { ...item, quantity: 1 }]);
-  }
-};
+    if (existing) {
+      const updatedCart = cart.map((c) =>
+        c.id === item.id
+          ? {
+              ...c,
+              quantity: Math.min((c.quantity || 1) + 1, 5),
+            }
+          : c
+      );
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { ...item, quantity: 1 }]);
+    }
+  };
 
   const removeFromCart = (index) => {
     const updated = [...cart];
@@ -58,7 +59,6 @@ function App() {
 
   return (
     <BrowserRouter>
-
       {/* 🔝 NAVBAR */}
       <Navbar
         cartCount={cart.length}
@@ -69,7 +69,6 @@ function App() {
       />
 
       <Routes>
-
         {/* 🏠 HOME */}
         <Route
           path="/"
@@ -80,7 +79,6 @@ function App() {
               )}
 
               <div className="home-layout">
-
                 <div className="left-section">
                   <Products
                     addToCart={addToCart}
@@ -108,7 +106,6 @@ function App() {
                     </div>
                   </div>
                 )}
-
               </div>
             </>
           }
@@ -125,17 +122,19 @@ function App() {
           }
         />
 
-        {/* 🛒 CART */}
+        {/* 🛒 CART (PROTECTED) */}
         <Route
-  path="/cart"
-  element={
-    <Cart
-      cart={cart}
-      setCart={setCart}   // ✅ ADD THIS
-      removeFromCart={removeFromCart}
-    />
-  }
-/>
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart
+                cart={cart}
+                setCart={setCart}
+                removeFromCart={removeFromCart}
+              />
+            </ProtectedRoute>
+          }
+        />
 
         {/* ❤️ WISHLIST */}
         <Route
@@ -150,34 +149,34 @@ function App() {
         />
 
         {/* 🔐 LOGIN */}
-        <Route
-          path="/login"
-          element={<Login setUser={setUser} />}
-        />
+        <Route path="/login" element={<Login setUser={setUser} />} />
 
-        {/* 📦 ORDERS (NEW FEATURE) */}
+        {/* 🆕 REGISTER */}
+        <Route path="/register" element={<Register />} />
+
+        {/* 📦 ORDERS (PROTECTED) */}
         <Route
           path="/orders"
-          element={<Orders />}
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
         />
 
-        {/* 💳 CHECKOUT */}
+        {/* 💳 CHECKOUT (PROTECTED) */}
         <Route
           path="/checkout"
           element={
-            <Checkout
-              cart={cart}
-              setCart={setCart}
-              user={user}
-            />
+            <ProtectedRoute>
+              <Checkout cart={cart} setCart={setCart} user={user} />
+            </ProtectedRoute>
           }
         />
 
         {/* 🎉 SUCCESS */}
         <Route path="/success" element={<Success />} />
-
       </Routes>
-
     </BrowserRouter>
   );
 }
