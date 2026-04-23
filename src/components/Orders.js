@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Orders.css";
 
-function Orders() {
+function Orders({ setChatMessage }) {
   const [orders, setOrders] = useState([]);
 
   // 🔥 Fetch orders
@@ -30,6 +30,11 @@ function Orders() {
     fetchOrders();
   }, []);
 
+  const handleOrderHelp = (order) => {
+    const items = order.cart?.map((item) => item.name).join(", ") || "items";
+    const message = `I need help with Order #${order.id} (${items}). Status: ${order.status || "Pending"}.`;
+    setChatMessage(message);
+  };
 
   return (
     <div className="orders-page">
@@ -76,6 +81,17 @@ function Orders() {
   0
 )}
               <p><b>Payment:</b> {order.payment_method}</p>
+
+              {/* 🆘 HELP BUTTON */}
+              <button
+                className="order-help-btn"
+                onClick={() => handleOrderHelp(order)}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                Help with this Order
+              </button>
             </div>
 
           </div>

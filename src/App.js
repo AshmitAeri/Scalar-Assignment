@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import Orders from "./components/Orders";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ChatBot from "./components/ChatBot";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const [category, setCategory] = useState("All");
   const [wishlist, setWishlist] = useState([]);
   const [user, setUser] = useState(null);
+  const [chatMessage, setChatMessage] = useState("");
 
   const addToCart = (item) => {
     const existing = cart.find((c) => c.id === item.id);
@@ -158,7 +160,7 @@ function App() {
           path="/orders"
           element={
             <ProtectedRoute>
-              <Orders />
+              <Orders setChatMessage={setChatMessage} />
             </ProtectedRoute>
           }
         />
@@ -176,6 +178,9 @@ function App() {
         {/* 🎉 SUCCESS */}
         <Route path="/success" element={<Success />} />
       </Routes>
+
+      {/* 💬 CHATBOT */}
+      <ChatBot initialMessage={chatMessage} />
     </BrowserRouter>
   );
 }
