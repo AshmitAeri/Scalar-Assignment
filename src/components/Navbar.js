@@ -136,12 +136,10 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
           </Link>
         ) : (
           <div className="profile">
-            👤 {user ? user.split("@")[0] : "User"}
-
-            <button
-              onClick={handleLogout}
-              className="logout-btn"
-            >
+            <span className="profile-name">
+              👤 {user ? user.split("@")[0] : "User"}
+            </span>
+            <button onClick={handleLogout} className="logout-btn">
               Logout
             </button>
           </div>
