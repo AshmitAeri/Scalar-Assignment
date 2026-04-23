@@ -136,19 +136,11 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
           </Link>
         ) : (
           <div className="profile">
-            👤 {user || "User"}
+            👤 {user ? user.split("@")[0] : "User"}
 
             <button
               onClick={handleLogout}
-              style={{
-                marginLeft: "10px",
-                background: "red",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                cursor: "pointer"
-              }}
+              className="logout-btn"
             >
               Logout
             </button>
