@@ -6,7 +6,8 @@ function Products({ addToCart, addToWishlist, search, category, setCategory }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://flipkart-backend-em8x.onrender.com/products")
+    const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
+    fetch(`${API}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error(err));

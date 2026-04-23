@@ -6,7 +6,14 @@ function Orders() {
 
   // 🔥 Fetch orders
   const fetchOrders = () => {
-    fetch("https://flipkart-backend-em8x.onrender.com/orders")
+    const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
+    const token = localStorage.getItem("token");
+
+    fetch(`${API}/orders`, {
+      headers: {
+        "Authorization": token
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
   if (Array.isArray(data)) {

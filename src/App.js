@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import banner1 from "./components/images/banner1.png";
-
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
 import Products from "./components/Products";

@@ -80,11 +80,15 @@ function Checkout({ cart, setCart, user }) {
       }
     }
 
+    const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
+    const token = localStorage.getItem("token");
+
     try {
-      const res = await fetch("https://flipkart-backend-em8x.onrender.com/orders", {
+      const res = await fetch(`${API}/orders`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": token
         },
         body: JSON.stringify({
   name: form.name,

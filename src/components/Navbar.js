@@ -18,7 +18,8 @@ function Navbar({ cartCount, wishlistCount, setSearch, setCategory, user }) {
 
   // Fetch products
   useEffect(() => {
-    fetch("https://flipkart-backend-em8x.onrender.com/products")
+    const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
+    fetch(`${API}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error(err));

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db");
@@ -89,7 +90,7 @@ app.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.rows[0].id },
+      { id: user.rows[0].id, email: user.rows[0].email },
       SECRET,
       { expiresIn: "1h" }
     );
@@ -131,9 +132,11 @@ app.post("/orders", verifyToken, async (req, res) => {
       total += item.price * (item.quantity || 1);
     });
 
+    const userId = req.user.id;
+
     const order = await pool.query(
-      "INSERT INTO orders (customer_name, address, phone, total) VALUES ($1,$2,$3,$4) RETURNING *",
-      [name, address, phone, total]
+      "INSERT INTO orders (customer_name, address, phone, total, user_id) VALUES ($1,$2,$3,$4,$5) RETURNING *",
+      [name, address, phone, total, userId]
     );
 
     const orderId = order.rows[0].id;
@@ -186,6 +189,8 @@ app.post("/orders", verifyToken, async (req, res) => {
 ============================== */
 app.get("/orders", verifyToken, async (req, res) => {
   try {
+    const userId = req.user.id;
+
     const result = await pool.query(`
       SELECT o.id, o.customer_name, o.address, o.phone, o.total, o.created_at,
       p.payment_method, s.status,
@@ -202,9 +207,10 @@ app.get("/orders", verifyToken, async (req, res) => {
       LEFT JOIN order_status s ON o.id = s.order_id
       LEFT JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products pr ON oi.product_id = pr.id
+      WHERE o.user_id = $1
       GROUP BY o.id, p.payment_method, s.status
       ORDER BY o.id DESC
-    `);
+    `, [userId]);
 
     res.json(result.rows);
 
@@ -236,10 +242,24 @@ app.put("/orders/:id/status", async (req, res) => {
 });
 
 /* ==============================
-   SERVER START
+   SERVER START + MIGRATIONS
 ============================== */
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} 🚀`);
+// Auto-migrate: add user_id column to orders if missing
+const runMigrations = async () => {
+  try {
+    await pool.query(`
+      ALTER TABLE orders ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id)
+    `);
+    console.log("✅ Migrations complete");
+  } catch (err) {
+    console.error("⚠️ Migration warning:", err.message);
+  }
+};
+
+runMigrations().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} 🚀`);
+  });
 });

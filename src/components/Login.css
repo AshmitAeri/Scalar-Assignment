@@ -1,0 +1,257 @@
+/* ========================================
+   AUTH PAGE (Login & Register shared)
+======================================== */
+
+.auth-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  padding: 40px 20px;
+}
+
+.auth-card {
+  display: flex;
+  width: 750px;
+  min-height: 500px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: authFadeIn 0.4s ease-out;
+}
+
+@keyframes authFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- LEFT PANEL ---------- */
+.auth-left {
+  flex: 0 0 260px;
+  background: linear-gradient(135deg, #2874f0, #1a5dc8);
+  color: white;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-left h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.auth-left p {
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.auth-illustration {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.auth-illustration svg {
+  width: 160px;
+  height: 160px;
+}
+
+/* ---------- RIGHT PANEL ---------- */
+.auth-right {
+  flex: 1;
+  padding: 50px 35px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---------- FLOATING LABEL INPUTS ---------- */
+.input-group {
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 0 8px 0;
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 15px;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  border-bottom-color: #2874f0;
+}
+
+.input-group label {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  font-size: 15px;
+  color: #878787;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -8px;
+  font-size: 11px;
+  color: #2874f0;
+  font-weight: 600;
+}
+
+/* ---------- ERROR ---------- */
+.auth-error {
+  background: #fff3f3;
+  color: #d32f2f;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  border-left: 3px solid #d32f2f;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ---------- TERMS TEXT ---------- */
+.auth-terms {
+  font-size: 11px;
+  color: #878787;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---------- SUBMIT BUTTON ---------- */
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #fb641b;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: #e85a10;
+  box-shadow: 0 2px 6px rgba(251, 100, 27, 0.4);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ---------- SPINNER ---------- */
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- DIVIDER ---------- */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #878787;
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+/* ---------- SWITCH BUTTON (Login ↔ Register) ---------- */
+.auth-switch-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  color: #2874f0;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.auth-switch-btn:hover {
+  background: #f5f5f5;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 768px) {
+  .auth-card {
+    flex-direction: column;
+    width: 100%;
+    max-width: 420px;
+    min-height: auto;
+  }
+
+  .auth-left {
+    flex: 0 0 auto;
+    padding: 30px 24px 20px;
+  }
+
+  .auth-left h2 {
+    font-size: 22px;
+  }
+
+  .auth-illustration {
+    display: none;
+  }
+
+  .auth-right {
+    padding: 30px 24px;
+  }
+}
